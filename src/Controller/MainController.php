@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class MainController
+class MainController extends AbstractController
 {
     public function indexAction()
     {
-        return new Response(
-            '<html><body>Hello Symfony 5</body></html>'
-        );
+        return $this->render('index.html.twig', [
+        ]);
     }
 }
