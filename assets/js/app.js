@@ -7,8 +7,13 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.less';
-var $ = require('jquery');
+
+window.$ = window.jQuery = require('jquery');
+global.Tether = require('tether');
+
+require('bootstrap');
 
 $(document).ready(function() {
-    $('body').prepend('<h1>From webpack</h1>');
+    $('body .container').prepend('<h1>From webpack</h1>');
 });
+
