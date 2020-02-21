@@ -8,23 +8,49 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class URLManager
 {
     private $params;
-    private $cache;
-    private $cachePrefix;
+//    private $cache;
+//    private $cachePrefix;
     private $shortUrlLength;
-    private $shortUrlRoot;
+//    private $shortUrlRoot;
 
-    /**
-     * URLManager constructor.
-     * @param ParameterBagInterface $params
-     */
+//    /**
+//     * URLManager constructor.
+//     * @param ParameterBagInterface $params
+//     */
+//    public function __construct(ParameterBagInterface $params)
+//    {
+//        $this->params = $params;
+//        $this->cache = new FilesystemAdapter();
+//        $this->cachePrefix = $this->params->get('cache_memory_prefix');
+//        $this->shortUrlLength = (int) $this->params->get('short_url_length');
+//        $this->shortUrlRoot = $this->params->get('short_url_root');
+//    }
+//
+///
     public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
-        $this->cache = new FilesystemAdapter();
-        $this->cachePrefix = $this->params->get('cache_memory_prefix');
         $this->shortUrlLength = (int) $this->params->get('short_url_length');
-        $this->shortUrlRoot = $this->params->get('short_url_root');
     }
+
+    /**
+     *
+     * @param string $url
+     * @return string
+     */
+    public function shorten($url){
+        do {
+            $randomString = $this->generateRandomString($this->shortUrlLength);
+        } while($this->cache->getItem($this->cachePrefix.$randomString)->get() != null);
+
+        $encodedUrl = $this->cache->getItem($this->cachePrefix.$randomString);
+        $encodedUrl->set($url);
+        $this->cache->save($encodedUrl);
+
+        return $this->shortUrlRoot . '/' . $randomString;
+    }
+
+    //todo check if string exists in the db
 
     /**
      *
