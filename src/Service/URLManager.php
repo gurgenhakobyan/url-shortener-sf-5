@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\UrlMapper;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -11,6 +13,7 @@ class URLManager
 //    private $cache;
 //    private $cachePrefix;
     private $shortUrlLength;
+    private $em;
 //    private $shortUrlRoot;
 
 //    /**
@@ -27,30 +30,25 @@ class URLManager
 //    }
 //
 ///
-    public function __construct(ParameterBagInterface $params)
+    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em)
     {
         $this->params = $params;
         $this->shortUrlLength = (int) $this->params->get('short_url_length');
+        $this->em = $em;
     }
 
     /**
      *
-     * @param string $url
      * @return string
      */
-    public function shorten($url){
+    public function shorten(){
+        $urlRepo = $this->em->getRepository(UrlMapper::class);
         do {
             $randomString = $this->generateRandomString($this->shortUrlLength);
-        } while($this->cache->getItem($this->cachePrefix.$randomString)->get() != null);
+        } while(count($urlRepo->findByShortenedUrl($randomString)) > 0);
 
-        $encodedUrl = $this->cache->getItem($this->cachePrefix.$randomString);
-        $encodedUrl->set($url);
-        $this->cache->save($encodedUrl);
-
-        return $this->shortUrlRoot . '/' . $randomString;
+        return $randomString;
     }
-
-    //todo check if string exists in the db
 
     /**
      *

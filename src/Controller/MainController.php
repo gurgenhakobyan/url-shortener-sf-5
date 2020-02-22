@@ -28,8 +28,8 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $urlMapper->setDateAdded(new \DateTime('now'));
-            $urlMapper->setDateAdded(new \DateTime('next month')); //todo add to config
-            $urlMapper->setShortenedUrl($urlManager->shorten($urlMapper->getInputUrl()));
+            $urlMapper->setDateExpiration(new \DateTime('next month')); //todo add to config
+            $urlMapper->setShortenedUrl($urlManager->shorten());
 
             $em->persist($urlMapper);
             $em->flush();

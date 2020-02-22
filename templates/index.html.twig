@@ -4,9 +4,11 @@
     <div class="container">
         Welcome!
 
-        <div class="form-group">
-            {{ form_widget(urlForm) }}
-        </div>
+        {{ form_start(urlForm) }}
+            <div class="form-group">
+                {{ form_widget(urlForm) }}
+            </div>
+        {{ form_start(urlForm) }}
     </div>
 
 
