@@ -19,14 +19,15 @@ class MainController extends AbstractController
      */
     public function indexAction(Request $request, URLManager $urlManager)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $existingUrlList = $em->getRepository(UrlMapper::class)->findAll();
         $urlMapper = new UrlMapper();
 
         $form = $this->createForm(UrlMapperType::class, $urlMapper);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $urlMapper->setDateAdded(new \DateTime('now'));
             $urlMapper->setDateExpiration(new \DateTime('next month')); //todo add to config
             $urlMapper->setShortenedUrl($urlManager->shorten());
@@ -37,7 +38,9 @@ class MainController extends AbstractController
         }
 
         return $this->render('index.html.twig', [
-            'urlForm' => $form->createView()
+            'urlForm' => $form->createView(),
+            'shortUrlList' => $existingUrlList,
+            'shortUrlPrefix' => $this->getParameter('short_url')
         ]);
     }
 }

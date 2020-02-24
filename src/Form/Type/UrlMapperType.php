@@ -23,7 +23,7 @@ class UrlMapperType extends AbstractType
                 ]
             ])
             ->add('convert', SubmitType::class, [
-                'attr' => ['class' => 'convert'],
+                'attr' => ['class' => 'convert btn btn-primary'],
             ]);
         ;
     }

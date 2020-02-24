@@ -5,8 +5,10 @@
         "core-js": "^3.0.0",
         "jquery": "^3.4.1",
         "less-loader": "^5.0.0",
+        "node-sass": "^4.13.1",
         "popper.js": "^1.16.1",
         "regenerator-runtime": "^0.13.2",
+        "sass-loader": "^7.0.1",
         "scss": "^0.2.4",
         "webpack-notifier": "^1.6.0"
     },
@@ -19,7 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "bootstrap": "4.0.0-alpha.6",
+        "bootstrap": "^4.4.1",
         "bootstrap-less": "^3.3.8",
         "less": "^3.11.1",
         "tether": "^1.4.7"

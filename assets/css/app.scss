@@ -1,0 +1,17 @@
+$primary: darken(#428bca, 20%);
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: lightgray;
+}
+
+.shortened-url-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li{
+        clear: both;
+    }
+}

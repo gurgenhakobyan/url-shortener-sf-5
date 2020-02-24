@@ -2,6 +2,23 @@
 
 {% block body %}
     <div class="container">
+        <section class="my-5">
+            <h2>Shortened urls list</h2>
+            <ul class="shortened-url-list">
+                <li class="row headers font-weight-bold">
+                    <span class="col-5">Initial URL</span>
+                    <span class="col-4">Shortened URL</span>
+                    <span class="col-3">Date Added</span>
+                </li>
+                {% for item in shortUrlList %}
+                    <li class="row">
+                        <span class="col-5">{{ item.inputUrl }}</span>
+                        <span class="col-4">{{ shortUrlPrefix ~ '/' ~ item.shortenedUrl }}</span>
+                        <span class="col-3">{{ item.dateExpiration|date('d-M-Y') }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
         Welcome!
 
         {{ form_start(urlForm) }}
