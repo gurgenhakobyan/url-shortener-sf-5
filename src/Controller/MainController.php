@@ -28,8 +28,13 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $urlMapper->setDateAdded(new \DateTime('now'));
-            $urlMapper->setDateExpiration(new \DateTime('next month')); //todo add to config
+
+            $currentDate = new \DateTime('now');
+            $expirationDate = clone $currentDate;
+            $expirationDate->add(new \DateInterval($this->getParameter('expiration_time')));
+
+            $urlMapper->setDateAdded($currentDate);
+            $urlMapper->setDateExpiration($expirationDate);
             $urlMapper->setShortenedUrl($urlManager->shorten());
 
             $em->persist($urlMapper);

@@ -1,3 +1,4 @@
 parameters:
+  expiration_time: '%env(EXPIRATION_TIME)%'
   short_url: '%env(SHORT_URL)%'
   short_url_length: 8
